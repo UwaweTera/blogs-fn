@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home/Home";
+import { NotFound } from "./pages/notfound/NotFound";
+import Header from "./components/layouts/Header";
+import { Post } from "./pages/posts/Post";
+import { Signup } from "./pages/auth/signup/Signup";
+import { Login } from "./pages/auth/login/Login";
+import ProtectRoutes from "./components/ProtectRoutes";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import { CreatePost } from "./pages/dashboard/CreatePost";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div>
+        <div className="main-container">
+          <Header />
+        </div>
+        <div className="">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/posts/:id" element={<Post />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/notfound" element={<NotFound />} />
+            <Route element={<ProtectRoutes />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/posts/create" element={<CreatePost />} />
+            </Route>
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
