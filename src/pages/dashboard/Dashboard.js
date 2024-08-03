@@ -20,7 +20,7 @@ export const Dashboard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserPostsThunk());
-  }, []);
+  }, [dispatch]);
   // console.log("userPosts", userPosts);
   return (
     <div className="main-container">

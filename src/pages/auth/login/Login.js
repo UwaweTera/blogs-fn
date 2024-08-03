@@ -29,7 +29,7 @@ export const Login = () => {
     const resp = await dispatch(loginThunk(data));
     if (resp.type === "user/login/fulfilled") {
       reset();
-      navigate("/");
+      window.location.href = "/";
     }
   };
   useEffect(() => {
