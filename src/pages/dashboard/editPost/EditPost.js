@@ -175,7 +175,7 @@ export const EditPost = () => {
                         <div className="flex items-center py-3">
                           <div class="avatar">
                             <div class="w-10 rounded-full">
-                              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                              <img src="https://res.cloudinary.com/dqy4dps7q/image/upload/v1717308706/user_ye5vmx.png" />
                             </div>
                           </div>
                           <div className="ml-2 ">

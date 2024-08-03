@@ -35,20 +35,20 @@ export const Home = () => {
             Explorations
           </p>
           <h1 className="font-serif text-5xl font-semibold my-2 text-center">
-            Social Media Solutions
+            Content Media Solutions
           </h1>
           <p className="text-lg text-center">
-            Discover the latest trends and insights in social media marketing.
+            Discover the latest trends and insights in Content media Solutions.
             From different peaple ideas
           </p>
         </div>
 
-        <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
-          {loading ? (
-            <div className="my-4">
-              <span class="loading loading-bars loading-md"></span>
-            </div>
-          ) : posts?.length ? (
+        {loading ? (
+          <div className="my-4">
+            <span class="loading loading-bars loading-md"></span>
+          </div>
+        ) : posts?.length ? (
+          <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
             <Slider {...settings} className="h-[100%] ">
               {posts.slice(0, 5).map((post, index) => (
                 <div key={index} className="">
@@ -85,10 +85,10 @@ export const Home = () => {
                 </div>
               ))}
             </Slider>
-          ) : (
-            <p>No posts found</p>
-          )}
-        </div>
+          </div>
+        ) : (
+          <p>{""}</p>
+        )}
       </div>
       <div className="bg-[#f8f8f8]  pb-5 py-16">
         <div className="main-container">
@@ -124,7 +124,7 @@ export const Home = () => {
                       <div className="flex items-center">
                         <div class="avatar">
                           <div class="w-8 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <img src="https://res.cloudinary.com/dqy4dps7q/image/upload/v1717308706/user_ye5vmx.png" />
                           </div>
                         </div>
                         <div className="ml-2">
