@@ -9,6 +9,7 @@ import ProtectRoutes from "./components/ProtectRoutes";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { CreatePost } from "./pages/dashboard/CreatePost";
 import { EditPost } from "./pages/dashboard/editPost/EditPost";
+import Footer from "./components/layouts/Footer";
 
 function App() {
   return (

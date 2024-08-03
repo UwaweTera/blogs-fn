@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { FaRegComment } from "react-icons/fa";
 import { formatDate } from "../../utils";
 import Description from "../../components/Description";
+import Footer from "../../components/layouts/Footer";
 
 export const Home = () => {
   const { loading, posts, error } = useSelector(getPosts);
@@ -43,8 +44,8 @@ export const Home = () => {
           </p>
         </div>
 
-        {loading ? (
-          <div className="my-4">
+        {!loading ? (
+          <div className="my-4 flex justify-center w-full ">
             <span class="loading loading-bars loading-md"></span>
           </div>
         ) : posts?.length ? (
@@ -94,7 +95,7 @@ export const Home = () => {
         <div className="main-container">
           <div>
             {loading ? (
-              <div className="my-4">
+              <div className="my-4 flex justify-center w-full">
                 <span class="loading loading-bars loading-md"></span>
               </div>
             ) : posts?.length ? (
@@ -151,6 +152,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -76,7 +76,7 @@ export const Post = () => {
       <div className="post-container pr-10 w-[100%]  md:w-[75%] flex  justify-center">
         {postLoading ? (
           <div>
-            <div className="my-4">
+            <div className="my-4 flex justify-center w-full">
               <span class="loading loading-bars loading-md"></span>
             </div>
           </div>

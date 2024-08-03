@@ -93,7 +93,7 @@ export const EditPost = () => {
     <div className="main-container">
       <ToastContainer />
       {postLoading ? (
-        <div className="my-4">
+        <div className="my-4 flex justify-center w-full">
           <span class="loading loading-bars loading-md"></span>
         </div>
       ) : (
