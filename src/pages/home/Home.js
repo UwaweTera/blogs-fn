@@ -44,7 +44,7 @@ export const Home = () => {
           </p>
         </div>
 
-        {!loading ? (
+        {loading ? (
           <div className="my-4 flex justify-center w-full ">
             <span class="loading loading-bars loading-md"></span>
           </div>

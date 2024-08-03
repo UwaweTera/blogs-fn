@@ -118,7 +118,6 @@ export const postCommentThunk = createAsyncThunk(
   "post/postComment",
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      console.log("comment: ", data);
       const response = await instance.post(`/posts/${id}/comments`, data);
       return response;
     } catch (error) {

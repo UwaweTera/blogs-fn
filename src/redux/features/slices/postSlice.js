@@ -173,7 +173,7 @@ const PostSlice = createSlice({
         state.createdCommentError = payload;
       })
       .addCase(postCommentThunk.fulfilled, (state, { payload }) => {
-        console.log("payload comm ", payload);
+        // console.log("payload comm ", payload);
         if (payload.status === 200) {
           state.createdCommentLoading = false;
           state.createdComment = payload.data;
