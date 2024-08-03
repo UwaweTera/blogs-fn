@@ -43,13 +43,13 @@ export const Home = () => {
           </p>
         </div>
 
-        <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
-          {loading ? (
-            <div className="my-4">
-              <span class="loading loading-bars loading-md"></span>
-            </div>
-          ) : posts?.length ? (
-            <>
+        {loading ? (
+          <div className="my-4">
+            <span class="loading loading-bars loading-md"></span>
+          </div>
+        ) : posts?.length ? (
+          <>
+            <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
               {posts.slice(0, 1).map((post, index) => (
                 <div key={index} className="">
                   <div className=" flex flex-col md:flex-row items-center justify-between ">
@@ -84,11 +84,11 @@ export const Home = () => {
                   </div>
                 </div>
               ))}
-            </>
-          ) : (
-            <p>{""}</p>
-          )}
-        </div>
+            </div>
+          </>
+        ) : (
+          <p>{""}</p>
+        )}
       </div>
       <div className="bg-[#f8f8f8]  pb-5 py-16">
         <div className="main-container">
@@ -110,13 +110,13 @@ export const Home = () => {
                       alt={post.title}
                       className="object-cover w-full rounded-[1rem] h-[16rem] "
                     />
-                    <div className="py-4 flex flex-col justify-center items-center">
+                    <div className="py-4 flex flex-col justify-center items-center px-3">
                       <h2 className="text-[16px] font-bold">{post.title}</h2>
-                      <p className="text-[#848484] text-justify text-[12px] text-left">
+                      <p className="text-[#848484] text-justify text-[12px] text-left mt-2">
                         <Description
                           description={post.content}
                           showMore={false}
-                          maxLength={200}
+                          maxLength={70}
                         />
                       </p>
                     </div>
