@@ -43,14 +43,14 @@ export const Home = () => {
           </p>
         </div>
 
-        {loading ? (
-          <div className="my-4">
-            <span class="loading loading-bars loading-md"></span>
-          </div>
-        ) : posts?.length ? (
-          <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
-            <Slider {...settings} className="h-[100%] ">
-              {posts.slice(0, 5).map((post, index) => (
+        <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
+          {loading ? (
+            <div className="my-4">
+              <span class="loading loading-bars loading-md"></span>
+            </div>
+          ) : posts?.length ? (
+            <>
+              {posts.slice(0, 1).map((post, index) => (
                 <div key={index} className="">
                   <div className=" flex flex-col md:flex-row items-center justify-between ">
                     <div>
@@ -84,11 +84,11 @@ export const Home = () => {
                   </div>
                 </div>
               ))}
-            </Slider>
-          </div>
-        ) : (
-          <p>{""}</p>
-        )}
+            </>
+          ) : (
+            <p>{""}</p>
+          )}
+        </div>
       </div>
       <div className="bg-[#f8f8f8]  pb-5 py-16">
         <div className="main-container">
