@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  createPostThunk,
   deletePostThunk,
+  EditPostThunk,
+  getPostCommentsThunk,
   getPostsThunk,
   getPostThunk,
+  getUserPostsThunk,
+  postCommentThunk,
 } from "../actions/postActions";
 
 const initialState = {
@@ -12,9 +17,24 @@ const initialState = {
   post: null,
   postLoading: false,
   postError: { message: undefined, status: false },
+  userPosts: null,
+  userPostsLoading: false,
+  userPostsError: null,
+  createdPost: null,
+  createPostLoading: false,
+  createPostError: null,
+  editedPost: null,
+  editedPostLoading: false,
+  editedPostError: null,
   deletedPost: null,
   deleteLoading: false,
-  deleteError: { message: undefined, status: false },
+  deleteError: null,
+  comments: null,
+  commentsLoading: false,
+  commentsError: null,
+  createdComment: null,
+  createdCommentLoading: false,
+  createdCommentError: null,
 };
 
 const PostSlice = createSlice({
@@ -46,6 +66,18 @@ const PostSlice = createSlice({
           state.error.message = payload.error?.response?.message || "Error";
         }
       })
+      // get user posts
+      .addCase(getUserPostsThunk.pending, (state) => {
+        state.userPostsLoading = true;
+      })
+      .addCase(getUserPostsThunk.rejected, (state, { payload }) => {
+        state.userPostsLoading = false;
+        state.userPostsError = payload;
+      })
+      .addCase(getUserPostsThunk.fulfilled, (state, { payload }) => {
+        state.userPostsLoading = false;
+        state.userPosts = payload.data;
+      })
       // slices for single post
       .addCase(getPostThunk.pending, (state) => {
         state.postLoading = true;
@@ -67,20 +99,84 @@ const PostSlice = createSlice({
         }
       })
 
+      // slices for create post
+      .addCase(createPostThunk.pending, (state) => {
+        state.createPostLoading = true;
+      })
+      .addCase(createPostThunk.rejected, (state, { payload }) => {
+        // console.log("delete fail payload: ", payload);
+        state.createPostLoading = false;
+        state.createPostError = payload;
+      })
+      .addCase(createPostThunk.fulfilled, (state, { payload }) => {
+        if (payload.status === 200) {
+          state.createPostLoading = false;
+          state.createdPost = payload;
+        }
+      })
+
+      // slices for edit post
+      .addCase(EditPostThunk.pending, (state) => {
+        state.editedPostLoading = true;
+      })
+      .addCase(EditPostThunk.rejected, (state, { payload }) => {
+        // console.log("delete fail payload: ", payload);
+        state.editedPostLoading = false;
+        state.editedPostError = payload;
+      })
+      .addCase(EditPostThunk.fulfilled, (state, { payload }) => {
+        if (payload.status === 200) {
+          state.editedPostLoading = false;
+          state.editedPost = payload;
+        }
+      })
+
       // slices for delete post
       .addCase(deletePostThunk.pending, (state) => {
         state.deleteLoading = true;
       })
       .addCase(deletePostThunk.rejected, (state, { payload }) => {
-        console.log("delete fail payload: ", payload);
+        // console.log("delete fail payload: ", payload);
         state.deleteLoading = false;
-        state.deleteError.status = payload?.status || "500";
-        state.deleteError.message = payload?.message || "Server Error";
+        state.deleteError = payload;
       })
       .addCase(deletePostThunk.fulfilled, (state, { payload }) => {
         if (payload.status === 200) {
           state.deleteLoading = false;
-          state.deletedPost = payload
+          state.deletedPost = payload;
+        }
+      })
+
+      // slices for get comments
+      .addCase(getPostCommentsThunk.pending, (state) => {
+        state.commentsLoading = true;
+      })
+      .addCase(getPostCommentsThunk.rejected, (state, { payload }) => {
+        // console.log("delete fail payload: ", payload);
+        state.commentsLoading = false;
+        state.commentsError = payload;
+      })
+      .addCase(getPostCommentsThunk.fulfilled, (state, { payload }) => {
+        // console.log('payload comm ', payload)
+        if (payload.status === 200) {
+          state.commentsLoading = false;
+          state.comments = payload.data;
+        }
+      })
+      // slices for post comments
+      .addCase(postCommentThunk.pending, (state) => {
+        state.createdCommentLoading = true;
+      })
+      .addCase(postCommentThunk.rejected, (state, { payload }) => {
+        // console.log("delete fail payload: ", payload);
+        state.createdCommentLoading = false;
+        state.createdCommentError = payload;
+      })
+      .addCase(postCommentThunk.fulfilled, (state, { payload }) => {
+        console.log("payload comm ", payload);
+        if (payload.status === 200) {
+          state.createdCommentLoading = false;
+          state.createdComment = payload.data;
         }
       });
   },

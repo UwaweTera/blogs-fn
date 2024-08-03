@@ -27,3 +27,19 @@ export const loginSchema = yup.object().shape({
     .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
+
+
+export const createPostSchema = yup.object().shape({
+    title: yup.string().required("Title is required"),
+    content: yup.string().required("Content is required"),
+    image: yup
+      .mixed()
+      .required("Image is required")
+      .test("fileType", "Unsupported File Format", (value) => {
+        return (
+          value &&
+          value[0] &&
+          ["image/jpeg", "image/png", "image/gif"].includes(value[0].type)
+        );
+      }),
+  });

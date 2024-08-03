@@ -8,7 +8,9 @@ import {
 } from "../../redux/features/slices/postSlice";
 import {
   deletePostThunk,
+  getPostsThunk,
   getPostThunk,
+  getUserPostsThunk
 } from "../../redux/features/actions/postActions";
 
 const DeletePost = ({ id }) => {
@@ -22,17 +24,15 @@ const DeletePost = ({ id }) => {
     e.preventDefault();
 
     const res = await dispatch(deletePostThunk(id));
-
-    if ((res.type = "post/deletePost/fulfilled")) {
+    // console.log("type");
+    if (res.type === "post/deletePost/fulfilled") {
       toast.success("Post deleted successfully");
       dispatch(clearDeletedPost());
-      dispatch(getPostThunk());
+      dispatch(getUserPostsThunk());
     }
   };
 
   useEffect(() => {
-    console.log("deleteError", deleteError);
-    console.log("deletedPost", deletedPost);
     if (deleteError && !deletedPost) {
       toast.error(deleteError.message || "Delete failed!", {
         toastId: "success1",

@@ -39,36 +39,19 @@ const Header = () => {
   };
 
   return (
-    <div className="flex item-center justify-between pt-5 ">
+    <div className="flex items-center justify-between pt-5 ">
       <div>
         <h1 className="font-semibold text-2xl text-primary">
           <Link to={"/"}>Articles</Link>
         </h1>
       </div>
-      {isAuthenticated && (
-        <div>
-          <ul className="flex">
-            <li className="mx-2">
-              <Link to={"/dashboard"}>
-                <span className="font-medium text-md hover:text-primary">
-                  Dashboard
-                </span>
-              </Link>
-            </li>
-            <li className="mx-2">
-              <Link to={"/dashboard/article"}>
-                <span className="font-medium text-md hover:text-primary">
-                  Articles
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
       {isAuthenticated ? (
         <div className="flex items-center ">
           <div className="mr-3">
-            <Link to={"/createPost"} className="block flex items-center">
+            <Link
+              to={"/dashboard/posts/create"}
+              className="block flex items-center"
+            >
               <span>
                 <FaRegEdit size={23} />
               </span>
@@ -83,10 +66,19 @@ const Header = () => {
             </div>
             <ul
               tabindex="0"
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              className="dropdown-content menu bg-white rounded-box z-[1] w-52 p-2 shadow"
             >
               <li>
                 <span className="font-medium text-md">{user?.email}</span>
+              </li>
+              <li>
+                <span className="font-medium text-md">
+                  <Link to={"/dashboard"}>
+                    <span className="font-medium text-md hover:text-primary">
+                      Dashboard
+                    </span>
+                  </Link>
+                </span>
               </li>
 
               <li>

@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { FaRegComment } from "react-icons/fa";
 import { formatDate } from "../../utils";
+import Description from "../../components/Description";
 
 export const Home = () => {
   const { loading, posts, error } = useSelector(getPosts);
@@ -19,7 +20,7 @@ export const Home = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -28,26 +29,28 @@ export const Home = () => {
 
   return (
     <>
-      <div className=" border border-white relative h-[50vh] main-container">
+      <div className=" border border-white relative  main-container">
         <div className="mt-5">
           <p className="font-semibold text-lg text-primary text-center">
-            INSIGHTS
+            Explorations
           </p>
           <h1 className="font-serif text-5xl font-semibold my-2 text-center">
-            Constructive Thinking
+            Social Media Solutions
           </h1>
           <p className="text-lg text-center">
-            Ideas at the intersection of bland strategy, digital design, and
-            social impact
+            Discover the latest trends and insights in social media marketing.
+            From different peaple ideas
           </p>
         </div>
 
-        <div className="border shadow h-[65vh] w-[95%] absolute top-[50%] p-10">
+        <div className="border shadow h-[65vh] w-[95%]  p-10 mt-10">
           {loading ? (
-            <p>loading...</p>
+            <div className="my-4">
+              <span class="loading loading-bars loading-md"></span>
+            </div>
           ) : posts?.length ? (
             <Slider {...settings} className="h-[100%] ">
-              {posts.map((post, index) => (
+              {posts.slice(0, 5).map((post, index) => (
                 <div key={index} className="">
                   <div className=" flex flex-col md:flex-row items-center justify-between ">
                     <div>
@@ -55,7 +58,13 @@ export const Home = () => {
                       <h1 className="font-serif text-3xl font-semibold capitalize">
                         {post.title}
                       </h1>
-                      <p className="text-lg my-3">{post.content}</p>
+                      <p className="text-lg my-3">
+                        <Description
+                          description={post.content}
+                          showMore={false}
+                          maxLength={200}
+                        />
+                      </p>
                       <div>
                         <Link
                           to={`/posts/${post.id}`}
@@ -66,7 +75,11 @@ export const Home = () => {
                       </div>
                     </div>
                     <div className=" md:h-[50vh] w-[50%]">
-                      <img src={post.image} alt={post.title} className="w-[100%] h-[100%] object-cover rounded"/>
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-[100%] h-[100%] object-cover rounded"
+                      />
                     </div>
                   </div>
                 </div>
@@ -77,11 +90,13 @@ export const Home = () => {
           )}
         </div>
       </div>
-      <div className="bg-[#f8f8f8] pt-[300px] pb-5">
+      <div className="bg-[#f8f8f8]  pb-5 py-16">
         <div className="main-container">
           <div>
             {loading ? (
-              <p>loading...</p>
+              <div className="my-4">
+                <span class="loading loading-bars loading-md"></span>
+              </div>
             ) : posts?.length ? (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mt-3">
                 {posts.map((post, index) => (
@@ -97,8 +112,12 @@ export const Home = () => {
                     />
                     <div className="py-4 flex flex-col justify-center items-center">
                       <h2 className="text-[16px] font-bold">{post.title}</h2>
-                      <p className="text-[#848484] text-justify text-[12px]">
-                        {post.content}
+                      <p className="text-[#848484] text-justify text-[12px] text-left">
+                        <Description
+                          description={post.content}
+                          showMore={false}
+                          maxLength={200}
+                        />
                       </p>
                     </div>
                     <div className="flex justify-between px-5">

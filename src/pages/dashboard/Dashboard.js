@@ -4,18 +4,24 @@ import { IoMdAdd } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../redux/features/slices/postSlice";
-import { getPostsThunk } from "../../redux/features/actions/postActions";
+import {
+  getPostsThunk,
+  getUserPostsThunk,
+} from "../../redux/features/actions/postActions";
 import { MdDeleteOutline } from "react-icons/md";
 import { formatDate } from "../../utils";
 import DeletePost from "../../components/Actions/DeletePost";
 import { ToastContainer } from "react-toastify";
+import Description from "../../components/Description";
 
 export const Dashboard = () => {
-  const { loading, posts, error } = useSelector(getPosts);
+  const { userPostsError, userPostsLoading, userPosts } = useSelector(getPosts);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPostsThunk());
+    dispatch(getUserPostsThunk());
   }, []);
+  // console.log("userPosts", userPosts);
   return (
     <div className="main-container">
       <ToastContainer />
@@ -25,15 +31,17 @@ export const Dashboard = () => {
         <div>
           <div className="bg-white rounded-lg shadow-md p-10 text-center">
             <h2 className="font-medium text-lg">Total Posts</h2>
-            <p className="text-3xl font-bold">1000</p>
+            <p className="text-3xl font-bold">
+              {userPosts?.length ? userPosts?.length : 0}
+            </p>
           </div>
         </div>
         <div>
           <div className="bg-white rounded-lg shadow-md p-10 text-center">
             <h2 className="font-medium text-lg">Total Comments</h2>
             <p className="text-3xl font-bold">
-              {posts?.length
-                ? posts.reduce((acc, post) => acc + post.comments.length, 0)
+              {userPosts?.length
+                ? userPosts.reduce((acc, post) => acc + post.comments.length, 0)
                 : 0}
             </p>
           </div>
@@ -47,7 +55,10 @@ export const Dashboard = () => {
       </div>
 
       <div className="mt-10">
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-lg font-medium">Articles</h1>
+          </div>
           <Link
             to={"/dashboard/posts/create"}
             className="block flex items-center bg-primary text-white rounded py-2 px-3 hover:opacity-75"
@@ -71,15 +82,15 @@ export const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {loading ? (
-                <div>
+              {userPostsLoading ? (
+                <div className="my-4">
                   <span class="loading loading-bars loading-md"></span>
                 </div>
               ) : (
                 <>
-                  {posts?.length ? (
+                  {userPosts?.length ? (
                     <>
-                      {posts?.map((post, index) => (
+                      {userPosts?.map((post, index) => (
                         <tr key={post.id}>
                           <td>{index + 1}</td>
                           <td className="flex items-center py-4 px-6 text-sm text-gray-500">
@@ -94,7 +105,13 @@ export const Dashboard = () => {
                               <b>{post.title}</b>
                             </div>
                           </td>
-                          <td>{post.content}</td>
+                          <td>
+                            <Description
+                              description={post.content}
+                              showMore={false}
+                              maxLength={200}
+                            />
+                          </td>
                           <td>{formatDate(post.updatedAt)}</td>
                           <td className="flex items-center">
                             <Link
@@ -114,7 +131,9 @@ export const Dashboard = () => {
                     </>
                   ) : (
                     <>
-                      <p className="text-center">No Post found</p>
+                      <div className="text-center my-4 ">
+                        <p className="text-lg">No posts found</p>
+                      </div>
                     </>
                   )}
                 </>

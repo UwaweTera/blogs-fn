@@ -8,6 +8,7 @@ import { Login } from "./pages/auth/login/Login";
 import ProtectRoutes from "./components/ProtectRoutes";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { CreatePost } from "./pages/dashboard/CreatePost";
+import { EditPost } from "./pages/dashboard/editPost/EditPost";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route element={<ProtectRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/posts/create" element={<CreatePost />} />
+              <Route path="/dashboard/posts/:id" element={<EditPost />} />
             </Route>
           </Routes>
         </div>
