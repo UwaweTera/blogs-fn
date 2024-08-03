@@ -74,7 +74,7 @@ export const Home = () => {
                         </Link>
                       </div>
                     </div>
-                    <div className=" md:h-[50vh] w-[50%]">
+                    <div className=" md:h-[50vh] w-[100%]">
                       <img
                         src={post.image}
                         alt={post.title}
