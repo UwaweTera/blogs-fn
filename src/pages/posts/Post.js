@@ -12,10 +12,16 @@ import { formatDate } from "../../utils";
 import { FaRegComment } from "react-icons/fa";
 import Description from "../../components/Description";
 import { ToastContainer, toast } from "react-toastify";
+import { LoginModal } from "../../components/common/LoginModal";
+import { auth } from "../../redux/features/slices/authSlice";
 
 export const Post = () => {
   const { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [comment, setComment] = useState("");
+  const { loginUser } = useSelector(auth);
+
   const {
     postLoading,
     post,
@@ -30,6 +36,23 @@ export const Post = () => {
     createdCommentLoading,
     createdComment,
   } = useSelector(getPosts);
+
+  // check login
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userAuth = localStorage.getItem("userAuth");
+
+    if (token && userAuth) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loginUser) {
+      setIsLogin(true);
+    }
+  }, [loginUser]);
 
   const dispatch = useDispatch();
   //   get single post
@@ -52,27 +75,37 @@ export const Post = () => {
   };
 
   const handleSubmit = async () => {
-    if (comment.trim() === "") {
-      // Optionally show an error message if the comment is empty
-      toast.error("Please enter a comment");
-      return;
-    }
-    const res = await dispatch(
-      postCommentThunk({ id, data: { message: comment } })
-    );
+    if (isLogin) {
+      if (comment.trim() === "") {
+        // Optionally show an error message if the comment is empty
+        toast.error("Please enter a comment");
+        return;
+      }
+      const res = await dispatch(
+        postCommentThunk({ id, data: { message: comment } })
+      );
 
-    if (res.type === "post/postComment/fulfilled") {
-      toast.success("Comment successfully");
-      setComment("");
-      dispatch(getPostCommentsThunk(id));
-    } else if (res.type === "post/postComment/rejected") {
-      toast.error(createdCommentError.message || "Error creating post");
+      if (res.type === "post/postComment/fulfilled") {
+        toast.success("Comment successfully");
+        setComment("");
+        dispatch(getPostCommentsThunk(id));
+      } else if (res.type === "post/postComment/rejected") {
+        toast.error(createdCommentError.message || "Error creating post");
+      }
+    } else {
+      setShowModal(true);
     }
   };
   // console.log("comments: ", comments);
   return (
     <div className="main-container flex flex-col md:flex-row">
       <ToastContainer />
+      {!isLogin && showModal && (
+        <LoginModal
+          setIsLogin={setIsLogin}
+          onClose={() => setShowModal(false)}
+        />
+      )}
       <div className="post-container pr-10 w-[100%]  md:w-[75%] flex  justify-center">
         {postLoading ? (
           <div>

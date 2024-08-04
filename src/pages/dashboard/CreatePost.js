@@ -58,7 +58,7 @@ export const CreatePost = () => {
   };
 
   return (
-    <div className="main-container flex items-center justify-center h-[80vh]">
+    <div className="main-container flex items-center justify-center ">
       <ToastContainer />
       <div className="w-[90%] md:w-[50%] p-8 md:p-16 rounded bg-gray-100 ">
         <h1 className="font-medium text-center text-2xl mb-4">Create Post</h1>
