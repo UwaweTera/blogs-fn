@@ -40,7 +40,7 @@ export const Home = () => {
           </h1>
           <p className="text-lg text-center">
             Discover the latest trends and insights in Content media Solutions.
-            From different peaple ideas
+            From different people ideas
           </p>
         </div>
 
